@@ -6,15 +6,15 @@ import List from './list';
 const paramGenerator = (props) => {
   switch (props.type) {
     case 'integer':
-      return <BasicInput type='number' name={props.name} required={props.required} />
+      return <BasicInput type='number' name={props.name} required={props.required} {...props} />
       break;
 
     case 'string':
-      return <BasicInput type='string' name={props.name} required={props.required} />
+      return <BasicInput type='string' name={props.name} required={props.required} {...props} />
       break;
 
     case 'text':
-      return <Textparam name={props.name} required={props.required} />
+      return <Textparam name={props.name} required={props.required} {...props}  />
       break;
 
       case 'list':

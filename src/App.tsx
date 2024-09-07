@@ -40,34 +40,34 @@ const oaiDalle3 =
       "name": "model",
       "type": "list",
       "required": false,
-      "description": "Defaults to dall-e-2 The model to use for image generation.",
+      "description": "Defaults to dall-e-2. The model to use for image generation.",
       options: ['dall-e-2', 'dall-e-3']
     },
     {
       "name": "n",
       "type": "integer",
       "required": false,
-      "description": "Defaults to 1 The number of images to generate. Must be between 1 and 10. For dall-e-3, only n=1 is supported.",
+      "description": "Defaults to 1. The number of images to generate. Must be between 1 and 10. For dall-e-3, only n=1 is supported.",
     },
     {
       "name": "quality",
       "type": "list",
       "required": false,
-      "description": "Defaults to standard The quality of the image that will be generated. hd creates images with finer details and greater consistency across the image. This param is only supported for dall-e-3.",
+      "description": "Defaults to standard. The quality of the image that will be generated. hd creates images with finer details and greater consistency across the image. This param is only supported for dall-e-3.",
       'options': ['standard', 'hd']
     },
     {
       "name": "response_format",
       "type": "list",
       "required": false,
-      "description": "Defaults to url The format in which the generated images are returned. Must be one of url or b64_json. URLs are only valid for 60 minutes after the image has been generated.",
+      "description": "Defaults to url. The format in which the generated images are returned. Must be one of url or b64_json. URLs are only valid for 60 minutes after the image has been generated.",
       'options': ['b64_json', 'url']
     },
     {
       "name": "size",
       "type": "list",
       "required": false,
-      "description": "Defaults to 1024x1024 The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.",
+      "description": "Defaults to 1024x1024. The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.",
       'options': ['1024x1024', '1792x1024', '1024x1792', '256x256', '512x512', '1024x1024']
     },
     {
