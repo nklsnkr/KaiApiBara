@@ -1,22 +1,30 @@
 
-import './App.css'
+import './App.css';
 
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import Keys from './components/keys';
 import paramGenerator from './components/paramTypes/paramGenerator';
+import { useEffect, useState } from 'react';
 
 export default function App() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="size-full">
 
-      <ResizablePanelGroup direction="horizontal" className='panel-0 min-h-screen min-w-full p-1 m-1 bg-black'>
-        <ResizablePanel className='panel-1 min-w-fit p-4 m-1 bg-black'>
+      <ResizablePanelGroup direction={width < 1000 ? "vertical":"horizontal"} className='panel-0 min-h-screen min-w-full p-1 m-1 bg-black flex flex-row '>
+        <ResizablePanel className='panel-1 min-w-fit p-4 m-1 bg-black overflow-y-auto flex flex-col flex-grow '>
           <Keys />
-          <div className='px-6' >
-          {oaiDalle3.map(p =>
-            paramGenerator(p))
-          }
+          <div className='px-6 overflow-y-auto flex flex-col flex-grow' >
+            {oaiDalle3.map(p =>
+              paramGenerator(p))
+            }
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
