@@ -23,10 +23,15 @@ https://ui.shadcn.com/docs/components/card
 
 Git: https://github.com/nklsnkr/KaiApiBara
 
+Zustand: https://zustand.docs.pmnd.rs/getting-started/introduction
+
+Zukeeper: https://github.com/oslabs-beta/Zukeeper?tab=readme-ov-file#readme
 
 ----
 
 # ToDos
+
+[ ] do the window sizing or scaling based on users scale thing
 
 ## HIGH
  [ ] 

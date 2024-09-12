@@ -5,90 +5,68 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import Keys from './components/keys';
 import paramGenerator from './components/paramTypes/paramGenerator';
 import { useEffect, useState } from 'react';
+import { oaiDalle3 } from './utils/apiConf';
+import { Button } from './components/ui/button';
+import useFormState from './utils/state';
+import ImagePanel from './components/ImagePanel';
+
+// import { sampleProps } from './utils/apiConf.js'
 
 export default function App() {
+  
   const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+  const formData = useFormState((state: { formData: any; }) => state.formData)
+  const loading = useFormState((state: { loading: any }) => state.loading)
+  const responseData = // sampleProps
+    useFormState((state: { responseData: any }) => state.responseData)
+  const apiKey = useFormState((state: { apiKey: any; }) => state.apiKey)
+  const makeApiCall = useFormState((state: { makeApiCall: any; }) => state.makeApiCall)
+  const handleResize = () => {
+    setHeight(window.innerHeight)
+    setWidth(window.innerWidth)
+  };
 
   useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    console.log({ responseData, loading, 'here': 'here' })
+  }, [responseData, loading]);
+
   return (
     <div className="size-full">
 
-      <ResizablePanelGroup direction={width < 1000 ? "vertical":"horizontal"} className='panel-0 min-h-screen min-w-full p-1 m-1 bg-black flex flex-row '>
-        <ResizablePanel className='panel-1 min-w-fit p-4 m-1 bg-black overflow-y-auto flex flex-col flex-grow '>
+      <ResizablePanelGroup direction={width < height ? "vertical" : "horizontal"} className='panel-0 min-h-screen min-w-full p-1 m-1 bg-black flex flex-row '>
+        <ResizablePanel className='panel-1 min-w-80 min-h-80 p-4 m-1 bg-black overflow-y-auto flex flex-col flex-grow '>
           <Keys />
           <div className='px-6 overflow-y-auto flex flex-col flex-grow' >
-            {oaiDalle3.map(p =>
+            {oaiDalle3.map((p: any) =>
               paramGenerator(p))
             }
           </div>
+          <div className="button-group m-4 flex justify-evenly">
+            <Button variant="ghost">Save</Button>
+            <Button variant="outline" className='text-cyan-300 bg-black' onClick={() => makeApiCall(formData, apiKey)} >Fetch</Button>
+          </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel className='panel-2 rounded-lg bg-black border-4 border-white min-w-96 p-3'>Two</ResizablePanel>
+        <ResizablePanel className='panel-2 rounded-lg bg-black border-4 border-white min-w-40 min-h-40 p-3 overflow-y-auto flex flex-col flex-grow'>
+          {
+            !!!responseData.data &&
+            <h2>do the thing and the image will appear here</h2>
+          }
+          {responseData && responseData?.data 
+          &&  responseData?.data?.map((r: any) =>
+              <ImagePanel loading={loading} data={r} />
+            )
+          }
+        </ResizablePanel>
       </ResizablePanelGroup>
+
     </div>
   )
 }
 
-
-
-const oaiDalle3 =
-  [
-    {
-      "name": "prompt",
-      "type": "text",
-      "required": true,
-      "description": "A text description of the desired image(s). The maximum length is 1000 characters for dall-e-2 and 4000 characters for dall-e-3."
-    },
-    {
-      "name": "model",
-      "type": "list",
-      "required": false,
-      "description": "Defaults to dall-e-2. The model to use for image generation.",
-      options: ['dall-e-2', 'dall-e-3']
-    },
-    {
-      "name": "n",
-      "type": "integer",
-      "required": false,
-      "description": "Defaults to 1. The number of images to generate. Must be between 1 and 10. For dall-e-3, only n=1 is supported.",
-    },
-    {
-      "name": "quality",
-      "type": "list",
-      "required": false,
-      "description": "Defaults to standard. The quality of the image that will be generated. hd creates images with finer details and greater consistency across the image. This param is only supported for dall-e-3.",
-      'options': ['standard', 'hd']
-    },
-    {
-      "name": "response_format",
-      "type": "list",
-      "required": false,
-      "description": "Defaults to url. The format in which the generated images are returned. Must be one of url or b64_json. URLs are only valid for 60 minutes after the image has been generated.",
-      'options': ['b64_json', 'url']
-    },
-    {
-      "name": "size",
-      "type": "list",
-      "required": false,
-      "description": "Defaults to 1024x1024. The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.",
-      'options': ['1024x1024', '1792x1024', '1024x1792', '256x256', '512x512', '1024x1024']
-    },
-    {
-      "name": "style",
-      "type": "list",
-      "required": false,
-      "description": "Defaults to vivid. The style of the generated images. Must be one of vivid or natural. Vivid causes the model to lean towards generating hyper-real and dramatic images. Natural causes the model to produce more natural, less hyper-real looking images. This param is only supported for dall-e-3.",
-      'options': ['vivid', 'natural']
-    },
-    {
-      "name": "user",
-      "type": "string",
-      "required": false,
-      "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse."
-    }
-  ]
