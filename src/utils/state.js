@@ -15,9 +15,10 @@ const useFormState = create(
             }
         })),
         responseData: {},
+        errorData: {},
         makeApiCall: async (formData, apiKey) => {
+            set({ loading: true })
             try {
-                set({ loading: true })
 
                 const response = await fetch('https://api.openai.com/v1/images/generations', {
                     method: 'POST',
@@ -30,6 +31,7 @@ const useFormState = create(
 
                 if (!response.ok) {
                     const errorDetails = await response.json();
+                    set({ errorData: errorDetails})
                     console.error('Error:', errorDetails.message);
                     throw new Error(errorDetails.message);
                 }
@@ -44,7 +46,7 @@ const useFormState = create(
                 console.error('Error:', err.message);
             }
 
-            return
+            set({ loading: false })
         }
     })))
 

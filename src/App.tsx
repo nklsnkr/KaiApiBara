@@ -11,6 +11,7 @@ import useFormState from './utils/state';
 import ImagePanel from './components/ImagePanel';
 
 // import { sampleProps } from './utils/apiConf.js'
+import ErrorPanel from './components/ErrorPanel';
 
 export default function App() {
   
@@ -18,6 +19,7 @@ export default function App() {
   const [height, setHeight] = useState(window.innerHeight);
   const formData = useFormState((state: { formData: any; }) => state.formData)
   const loading = useFormState((state: { loading: any }) => state.loading)
+  const errorData = useFormState((state: { errorData: any }) => state.errorData)
   const responseData = // sampleProps
     useFormState((state: { responseData: any }) => state.responseData)
   const apiKey = useFormState((state: { apiKey: any; }) => state.apiKey)
@@ -33,8 +35,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.log({ responseData, loading, 'here': 'here' })
-  }, [responseData, loading]);
+    console.log({ responseData, loading, errorData })
+  }, [responseData, loading, errorData]);
 
   return (
     <div className="size-full">
@@ -55,13 +57,16 @@ export default function App() {
         <ResizableHandle withHandle />
         <ResizablePanel className='panel-2 rounded-lg bg-black border-4 border-white min-w-40 min-h-40 p-3 overflow-y-auto flex flex-col flex-grow'>
           {
-            !!!responseData.data &&
+            !errorData && !!!responseData.data &&
             <h2>do the thing and the image will appear here</h2>
           }
           {responseData && responseData?.data 
           &&  responseData?.data?.map((r: any) =>
               <ImagePanel loading={loading} data={r} />
             )
+          }
+          {
+errorData && <ErrorPanel errorData={errorData.error} />
           }
         </ResizablePanel>
       </ResizablePanelGroup>
