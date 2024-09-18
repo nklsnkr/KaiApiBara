@@ -3,13 +3,20 @@ import './App.css';
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { useEffect, useState } from 'react';
+// @ts-ignore
 import ImagePanel from './components/ImagePanel';
+
+// @ts-ignore
 import Keys from './components/keys';
+// @ts-ignore
 import paramGenerator from './components/paramTypes/paramGenerator';
 import { Button } from './components/ui/button';
+// @ts-ignore
 import { oaiDalle3 } from './utils/apiConf';
+// @ts-ignore
 import useFormState from './utils/state';
 
+// @ts-ignore
 import ErrorPanel from './components/ErrorPanel';
 
 export default function App() {

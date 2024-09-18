@@ -6,8 +6,24 @@
   ],
   "compilerOptions": {
     "baseUrl": ".",
+    "allowJs": true,
+    "jsx": "react",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noImplicitAny": false,
+    "esModuleInterop": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ]
 }

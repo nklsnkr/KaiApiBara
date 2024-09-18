@@ -1,5 +1,4 @@
 import React from 'react'
-
 const ErrorPanel = ({ errorData }) => {
     console.log(errorData)
     return (
