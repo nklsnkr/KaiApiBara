@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { BasicInput } from './basicInput';
-import { Textparam } from './text';
 import List from './list';
+import { Textparam } from './text';
 
 const paramGenerator = (props) => {
   switch (props.type) {
@@ -27,10 +27,10 @@ const paramGenerator = (props) => {
 
 export default paramGenerator
 
-export const paramTypes = {
-  // 'integer': ,
-  // 'string': ,
-  // 'text': ,
-  // 'bool': ,
-  // 'list': ,
-}
+// export const paramTypes = {
+//   // 'integer': ,
+//   // 'string': ,
+//   // 'text': ,
+//   // 'bool': ,
+//   // 'list': ,
+// }

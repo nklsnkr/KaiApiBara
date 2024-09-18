@@ -1,16 +1,15 @@
-import React from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
+import React from 'react'
 
-const ImagePanel = ({ loading, data }) => {
+const ImagePanel = ({ isLoading, data }) => {
 
     console.log(data)
 
-    if (loading)
+    if (isLoading)
         return <SkeletonImage />
 
     return (
         <div className='overflow-y-auto flex flex-col flex-grow min-h-fit m-2 p-2'>
-            // 
             {data?.revised_prompt &&
                 <div className="text-white">
                     <h3>revised_prompt : </h3> <p>{data.revised_prompt}</p>

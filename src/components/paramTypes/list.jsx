@@ -1,9 +1,8 @@
 "use client"
 
-import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Command,
@@ -18,6 +17,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
 import { Label } from "@radix-ui/react-label"
 import useFormState from "../../utils/state"
 
@@ -37,7 +37,7 @@ export default function List(props) {
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button
-                    id={props.name}
+                        id={props.name}
                         variant="outline"
                         role="combobox"
                         aria-expanded={open}
@@ -60,7 +60,7 @@ export default function List(props) {
                                         key={option.value}
                                         value={option.value}
                                         onSelect={(currentValue) => {
-                                            if(currentValue !== value){
+                                            if (currentValue !== value) {
 
                                                 setValue(currentValue === value ? "" : currentValue)
                                                 setFormData(props.name, currentValue)

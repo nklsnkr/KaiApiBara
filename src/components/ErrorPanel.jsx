@@ -7,16 +7,16 @@ const ErrorPanel = ({ errorData }) => {
             <h2 className='text-white text-3xl' >error :(</h2>
             <br />
             <br />
-            code: {errorData.code || 'null'}
+            code: {errorData?.code || 'null'}
             <br />
             <br />
-            message: {errorData.message || 'null'}
+            message: {errorData?.message || 'null'}
             <br />
             <br />
-            param: {errorData.param || 'null'}
+            param: {errorData?.param || 'null'}
             <br />
             <br />
-            type: {errorData.type || 'null'}
+            type: {errorData?.type || 'null'}
         </div>
     )
 }

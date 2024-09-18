@@ -2,26 +2,25 @@
 import './App.css';
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { useEffect, useState } from 'react';
+import ImagePanel from './components/ImagePanel';
 import Keys from './components/keys';
 import paramGenerator from './components/paramTypes/paramGenerator';
-import { useEffect, useState } from 'react';
-import { oaiDalle3 } from './utils/apiConf';
 import { Button } from './components/ui/button';
+import { oaiDalle3 } from './utils/apiConf';
 import useFormState from './utils/state';
-import ImagePanel from './components/ImagePanel';
 
-// import { sampleProps } from './utils/apiConf.js'
 import ErrorPanel from './components/ErrorPanel';
 
 export default function App() {
-  
+
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
   const formData = useFormState((state: { formData: any; }) => state.formData)
-  const loading = useFormState((state: { loading: any }) => state.loading)
+  const isLoading = useFormState((state: { isLoading: any }) => state.isLoading)
+  const isError = useFormState((state: { isError: any }) => state.isError)
   const errorData = useFormState((state: { errorData: any }) => state.errorData)
-  const responseData = // sampleProps
-    useFormState((state: { responseData: any }) => state.responseData)
+  const responseData = useFormState((state: { responseData: any }) => state.responseData)
   const apiKey = useFormState((state: { apiKey: any; }) => state.apiKey)
   const makeApiCall = useFormState((state: { makeApiCall: any; }) => state.makeApiCall)
   const handleResize = () => {
@@ -35,8 +34,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.log({ responseData, loading, errorData })
-  }, [responseData, loading, errorData]);
+    console.log({ responseData, isLoading, errorData })
+  }, [responseData, isLoading, errorData]);
 
   return (
     <div className="size-full">
@@ -50,23 +49,24 @@ export default function App() {
             }
           </div>
           <div className="button-group m-4 flex justify-evenly">
-            <Button variant="ghost">Save</Button>
             <Button variant="outline" className='text-cyan-300 bg-black' onClick={() => makeApiCall(formData, apiKey)} >Fetch</Button>
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel className='panel-2 rounded-lg bg-black border-4 border-white min-w-40 min-h-40 p-3 overflow-y-auto flex flex-col flex-grow'>
           {
-            !errorData && !!!responseData.data &&
+            (!isError && !!!responseData.data) &&
             <h2>do the thing and the image will appear here</h2>
           }
-          {responseData && responseData?.data 
-          &&  responseData?.data?.map((r: any) =>
-              <ImagePanel loading={loading} data={r} />
+          {
+            (responseData && responseData?.data) &&
+            responseData?.data?.map((r: any) =>
+              <ImagePanel isLoading={isLoading} data={r} />
             )
           }
           {
-errorData && <ErrorPanel errorData={errorData.error} />
+            (isError && !!errorData) &&
+            <ErrorPanel errorData={errorData.error} />
           }
         </ResizablePanel>
       </ResizablePanelGroup>
